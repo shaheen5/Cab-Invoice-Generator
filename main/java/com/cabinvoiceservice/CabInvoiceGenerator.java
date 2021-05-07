@@ -1,5 +1,7 @@
 package com.cabinvoiceservice;
 
+import java.util.List;
+
 public class CabInvoiceGenerator {
     //constants
     private static final int COST_PER_MIN_TIME = 1;
@@ -18,5 +20,16 @@ public class CabInvoiceGenerator {
             totalFare += this.calculateFare(ride.distance,ride.time);
         }
         return new InvoiceSummary(rides.length,totalFare);
+    }
+    //method to get invoice summary of given userId from all users
+    public InvoiceSummary getUserInvoice(int id,User[] users) {
+        Ride[] rides = null;
+        for(User user : users){
+            if(user.userId == id){
+                rides = user.getRides();
+            }
+        }
+        InvoiceSummary invoiceSummary = calculateFare(rides);
+        return invoiceSummary;
     }
 }
